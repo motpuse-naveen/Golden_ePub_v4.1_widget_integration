@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.idpf.org/2007/opf" xmlns:dcterms="http://purl.org/dc/terms/" version="3.0" xml:lang="en" unique-identifier="p9780124046320">
+<package xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.idpf.org/2007/opf" xmlns:dcterms="http://purl.org/dc/terms/" prefix="tdm: http://www.w3.org/ns/tdmrep/" version="3.0" xml:lang="en" unique-identifier="p9780124046320">
   <metadata>
      <meta property="schema:accessMode">textual</meta>	
      <meta property="schema:accessMode">visual</meta>
@@ -9,6 +9,9 @@
      <meta property="schema:accessibilityFeature">structuralNavigation</meta>
      <meta property="schema:accessibilityFeature">displayTransformability</meta>
      <meta property="schema:accessibilityFeature">MathML</meta>
+     <meta property="schema:accessibilityFeature">describedMath</meta>
+     <meta property="schema:accessibilityFeature">ARIA</meta>
+     <meta property="schema:accessibilityFeature">pageNavigation</meta>
      <meta property="schema:accessibilityFeature">alternativeText</meta>
      <meta property="schema:accessibilityFeature">longDescription</meta>
      <meta property="schema:accessibilityFeature">tableOfContents</meta>
@@ -20,6 +23,8 @@
      <meta property="schema:accessibilityHazard">noSoundHazard</meta>
      <meta property="schema:accessibilityHazard">noMotionSimulationHazard</meta>
      <meta property="schema:accessibilitySummary">This publication conforms to WCAG 2.0 Level AA.</meta>
+     <meta property="tdm:reservation">1</meta>
+     <meta property="tdm:policy">https://www.elsevier.com/tdm/tdmrep-policy.json</meta>
       <dc:identifier id="p9780124046320">urn:isbn:978-0-12-809343-6</dc:identifier>
       <meta refines="#p9780124046320" property="identifier-type" scheme="onix:codelist5">15</meta>
       <dc:title id="t1">Research Methods in Human-Computer Interaction</dc:title>
@@ -44,8 +49,8 @@
       <dc:publisher>Elsevier Inc.</dc:publisher>
       <dc:language>en</dc:language><dc:type>Text</dc:type>
       <dc:format>56 pages</dc:format>
-      <dc:date>2012</dc:date>
-      <meta property="dcterms:modified">2014-01-30T15:30:00Z</meta>
+      <dc:date>2024-05-09</dc:date>
+      <meta property="dcterms:modified">2024-05-09T15:30:00Z</meta>
       <meta name="cover" content="cover-image"/>
    </metadata>
    <manifest>
@@ -65,6 +70,7 @@
 	<item id="Lot" href="xhtml/ListOfTables_xvi_B9780124158207000154.xhtml" media-type="application/xhtml+xml"/>
 	<item id="Volume" href="xhtml/Volume.xhtml" media-type="application/xhtml+xml"/>	
 	<item id="CHP001" properties="mathml scripted" href="xhtml/Ch001_1-18_B978012415820700007X.xhtml" media-type="application/xhtml+xml"/>
+	<item id="CHP001a" href="xhtml/Ch001_Extended_Fig1_1.xhtml" media-type="application/xhtml+xml"/>
 	<item id="cssme" href="styles/media.css" media-type="text/css"/>
 	<item id="cssma" href="styles/math.css" media-type="text/css"/>
 	<item href="styles/math.js" id="mathjs" media-type="text/javascript"/>
@@ -72,6 +78,11 @@
 	<item id="Glossary" href="xhtml/Glossary_20_B9780124158207000054.xhtml" media-type="application/xhtml+xml"/>
 	<item id="Bibliography" href="xhtml/Bibliography_21_B9780124158207000178.xhtml" media-type="application/xhtml+xml"/>	
 	<item id="IDX001" href="xhtml/Index_22_B9780124158207000044.xhtml" media-type="application/xhtml+xml"/>
+	<item id="AM001" href="xhtml/Ancillary_Materials.xhtml" media-type="application/xhtml+xml"/>
+	<item id="PDF1" href="images/Sample_PDF.pdf" media-type="application/pdf"/>
+	<item id="PPT1" href="images/Sample_PowerPoint.pptx" media-type="application/vnd.ms-powerpoint"/>
+	<item id="XLS1" href="images/Sample_Spreadsheet.xlsx" media-type="application/vnd.ms-excel"/>
+	<item id="DOC1" href="images/Sample_Word.docx" media-type="application/msword"/>
 	<item id="css" href="styles/Elsevier_eBook.css" media-type="text/css"/>
 	<item id="cover-image" properties="cover-image" href="images/9780128093436_FC.jpg" media-type="image/jpeg"/>
 	<item id="Img1" href="images/publogo.jpg" media-type="image/jpeg"/>
@@ -87,9 +98,10 @@
 	<item id="Img6" href="images/F000013f01-01-9780124158207.jpg" media-type="image/jpeg"/>
 	<item id="Img7" href="images/F000013f01-02-9780124158207.jpg" media-type="image/jpeg"/>
 	<item id="Img8" href="images/F000013f01-03-9780124158207.jpg" media-type="image/jpeg"/>
+
 	<item id="Img9" href="images/chem.jpg" media-type="image/jpeg"/>
 	<item id="Img10" href="images/F000018si1.png" media-type="image/png"/>
-	<item id="Img11" href="images/F000029si1.png" media-type="image/png"/>
+	<item id="Img11" href="images/F000029si1.svg" media-type="image/svg+xml"/>
 	<item id="Img11a" href="images/chp001_gr001.jpg" media-type="image/jpeg"/>
 	<item id="Img12" href="images/F000036mmc03-01-9780128023198.jpg" media-type="image/jpeg"/>
 	<item id="Vid1" href="videos/mmc03-01-9780128023198.mp4" media-type="video/mp4"/>
@@ -226,7 +238,7 @@
 
 <item id="enhance_1" href="xhtml/Slideshow.xhtml" properties="scripted" media-type="application/xhtml+xml"/>
 <item id="enhance_2" href="xhtml/Showhide.xhtml" properties="scripted" media-type="application/xhtml+xml"/>
-<item id="enhance_3" href="xhtml/Flashcard.xhtml" properties="scripted" media-type="application/xhtml+xml"/>
+<item id="enhance_3" href="xhtml/Flashcard.xhtml" media-type="application/xhtml+xml"/>
 
 <!--Slideshow-->
 <item id="SlideShow_1" href="widgets/Slide_Show/css/header_style.css" media-type="text/css"/>
@@ -249,13 +261,16 @@
 <item id="SlideShow_18" href="widgets/Slide_Show/images/navbar_plus.png" media-type="image/png"/>
 
 <!--Show/Hide-->
-<item id="widget_1" href="widgets/Show_Hide/css/show_hide.css" media-type="text/css"/>
-<item id="widget_2" href="widgets/Show_Hide/images/Expand_N.svg" media-type="image/svg+xml"/>
-<item id="widget_3" href="widgets/Show_Hide/images/Collapse_N.svg" media-type="image/svg+xml"/>
-<item id="widget_4" href="widgets/Show_Hide/images/Expand_Hover_N.svg" media-type="image/svg+xml"/>
-<item id="widget_5" href="widgets/Show_Hide/images/Collapse_hover_N.svg" media-type="image/svg+xml"/>
-<item id="widget_6" href="widgets/Show_Hide/script/jquery-3.6.0.min.js" media-type="text/javascript"/>
-<item id="widget_7" href="widgets/Show_Hide/script/show_hide.js" media-type="text/javascript"/>
+<item id="ShowHide_1" href="widgets/Show_Hide/css/show_hide.css" media-type="text/css"/>
+<item id="ShowHide_2" href="widgets/Show_Hide/images/Expand_N.svg" media-type="image/svg+xml"/>
+<item id="ShowHide_3" href="widgets/Show_Hide/images/Collapse_N.svg" media-type="image/svg+xml"/>
+<item id="ShowHide_4" href="widgets/Show_Hide/images/Expand_Hover_N.svg" media-type="image/svg+xml"/>
+<item id="ShowHide_5" href="widgets/Show_Hide/images/Collapse_hover_N.svg" media-type="image/svg+xml"/>
+<item id="ShowHide_6" href="widgets/Show_Hide/script/jquery-3.6.0.min.js" media-type="text/javascript"/>
+<item id="ShowHide_7" href="widgets/Show_Hide/script/show_hide.js" media-type="text/javascript"/>
+<item id="ShowHide_8" href="images/dummy1.png" media-type="image/png"/>
+<item id="ShowHide_9" href="images/dummy2.png" media-type="image/png"/>
+<item id="ShowHide_10" href="images/dummy3.png" media-type="image/png"/>
 
 <!--Flashcard-->
 <item id="Flashcard_1" href="widgets/Flashcard/01/activity.html" media-type="text/html"/>
@@ -276,7 +291,9 @@
 <item id="Flashcard_16" href="widgets/Flashcard/01/images/2.png" media-type="image/png"/>
 <item id="Flashcard_17" href="widgets/Flashcard/01/images/3.png" media-type="image/png"/>
 <item id="Flashcard_18" href="widgets/Flashcard/01/images/1.png" media-type="image/png"/>
-<item id="Flashcard_19" href="widgets/Flashcard/01/activityframe.html" media-type="text/html"/>
+<item id="Flashcard_19" href="widgets/Flashcard/01/activityframe.html" media-type="text/html" fallback="activityframe-fallback"/>
+<item id="activityframe-fallback" href="widgets/Flashcard/01/fallback.txt" media-type="text/plain"/>
+
 <item id="Flashcard_20" href="widgets/Flashcard/01/index.xhtml" properties="scripted" media-type="application/xhtml+xml"/>
 <item id="Flashcard_21" href="widgets/Flashcard/activity-main/js/widgetinit.js" media-type="text/javascript"/>
 <item id="Flashcard_22" href="widgets/Flashcard/activity-main/js/widget.js" media-type="text/javascript"/>
@@ -311,10 +328,12 @@
    <itemref idref="Lot" linear="yes"/>
    <itemref idref="Volume" linear="yes"/>
    <itemref idref="CHP001" linear="yes"/>
+   <itemref idref="CHP001a" linear="yes"/>
    <itemref idref="Appendix" linear="yes"/>
    <itemref idref="Glossary" linear="yes"/>
    <itemref idref="Bibliography" linear="yes"/>
    <itemref idref="IDX001" linear="yes"/>
+   <itemref idref="AM001" linear="yes"/>
    <itemref idref="enhance_1" linear="yes"/>
    <itemref idref="enhance_2" linear="yes"/>
    <itemref idref="enhance_3" linear="yes"/>
