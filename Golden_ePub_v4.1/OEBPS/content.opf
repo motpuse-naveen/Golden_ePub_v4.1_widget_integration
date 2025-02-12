@@ -238,7 +238,7 @@
 
 <item id="enhance_1" href="xhtml/Slideshow.xhtml" properties="scripted" media-type="application/xhtml+xml"/>
 <item id="enhance_2" href="xhtml/Showhide.xhtml" properties="scripted" media-type="application/xhtml+xml"/>
-<item id="enhance_3" href="xhtml/Flashcard.xhtml" media-type="application/xhtml+xml"/>
+<item id="enhance_3" href="xhtml/Flashcard.xhtml" properties="scripted" media-type="application/xhtml+xml"/>
 
 <!--Slideshow-->
 <item id="SlideShow_1" href="widgets/Slide_Show/css/header_style.css" media-type="text/css"/>
