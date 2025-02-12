@@ -1,0 +1,1254 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <!-- https://code.jquery.com/jquery-3.2.1.slim.min.js -->
+  <script type="text/javascript" src="report-html-files/jquery-3.2.1.slim.min.js"></script>
+
+  <!-- https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js -->
+  <script type="text/javascript" src="report-html-files/popper.min.js"></script>
+
+  <!-- https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js -->
+  <script type="text/javascript" src="report-html-files/bootstrap.min.js"></script>
+
+  <!-- https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js -->
+  <script type="text/javascript" src="report-html-files/jquery.dataTables.min.js"></script>
+
+  <!-- https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js -->
+  <script type="text/javascript" src="report-html-files/dataTables.bootstrap4.min.js"></script>
+
+  <!-- https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css -->
+  <link rel="stylesheet" type="text/css" href="report-html-files/dataTables.bootstrap4.min.css" />
+
+  <!-- https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css -->
+  <link rel="stylesheet" type="text/css" href="report-html-files/bootstrap.min.css" />
+
+  <!-- https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css -->
+  <link rel="stylesheet" type="text/css" href="report-html-files/dataTables.bootstrap4.min.css" />
+
+  <!-- https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css -->
+  <link rel="stylesheet" type="text/css" href="report-html-files/bootstrap.min.css" />
+
+  <style>
+    /* general */
+    body {
+      margin: 3em;
+    }
+    .tab-content {
+      margin-top: 2em;
+    }
+
+    table th {
+      width: auto !important;
+    }
+    code {
+      line-height: 1.5;
+    }
+
+    .location {
+      font-size:.8em;font-family:monospace;overflow-wrap:break-word
+    }
+
+    .snippet {
+      font-size:.8em;
+    }
+    .snippet code {
+      display: block;
+      font-size:1em;
+      font-family:monospace;overflow-wrap:break-word;
+      margin-top: 1em;
+    }
+
+    .tab-pane{
+      margin-top: 1.5em;
+      margin-left: 1em;
+      margin-bottom: 2em; /* useful for javascriptless (tab-less) linear display mode */
+    }
+
+    .pagenav {
+      font-style: italic;
+      font-size: small;
+      margin-top: 1em;
+    }
+
+    .sectionnav {
+      font-style: italic;
+      font-size: small;
+      margin-top: 1em;
+      margin-bottom: 2em;
+    }
+    /* metadata */
+    #metadata-table tr td:first-child {
+      font-family: 'Courier New';
+      font-weight: bold;
+    }
+    .metadata-name {
+      font-family: 'Courier New';
+      font-weight: bold;
+    }
+    .metadata-name:after {
+      content: ", ";
+    }
+    .metadata-name:last-child::after {
+      content: "";
+    }
+    #a11y-metadata {
+      margin-top: 1em;
+    }
+    #metadata-table_wrapper {
+      padding-left: 0 !important;
+    }
+
+    /* TOC outline */
+    .toc-h1:before,.toc-h2:before,.toc-h3:before,.toc-h4:before,.toc-h5:before,.toc-h6:before,.toc-missing{
+      display:inline-block;
+      height:1.5em;
+      padding:0 .4em;
+      background-color:#449d44;
+      border-radius:4px;
+      color:#fff;
+      font-size:.8em;
+      font-family:monospace;
+      margin:0 .5em 0 0;
+    }
+
+    .toc-h1:before{content:'h1'}
+    .toc-h2:before{content:'h2'}
+    .toc-h3:before{content:'h3'}
+    .toc-h4:before{content:'h4'}
+    .toc-h5:before{content:'h5'}
+    .toc-h6:before{content:'h6'}
+    .toc-missing{font-family:inherit;background-color:#c9302c}
+
+    #toc-outline ol, #html-outline ol {
+      list-style: disc;
+    }
+
+    /* images */
+    #images td {
+      text-align: center;
+      font-family: serif;
+    }
+    #images td.image{
+      /*text-align:center;*/
+      padding:.2em;
+    }
+    #images td.missing{
+      /*text-align:center;*/
+      color:#888;
+      font-style:italic;
+    }
+    #images td.alt {border:1px solid #ddd}
+    #images td.alt.missing{background-color:#f2dede}
+    #images td.alt,td.image.presentation+td.alt.missing{background-color:#dff0d8}
+    #images img {
+      max-height: 300px;
+      max-width: 300px;
+    }
+
+    /* violations  */
+    #violations-summary-stats-table {
+      width: 30%;
+    }
+    #violations ul:not(.pagination) {
+      list-style-type: circle;
+    }
+
+    #filters select {
+      margin-left: 10px;
+      margin-right: 30px;
+    }
+
+    .filter-label {
+      text-transform: capitalize;
+    }
+
+    .engine {
+      font-style: italic;
+    }
+    .engine:before{content: '(via '}
+    .engine:after{content: ')'}
+    .css:before{content: 'CSS: '}
+    .cfi:before{content: 'CFI: '}
+
+    /* make the list and KB link the same padding */
+    td.details p{
+      padding-left: 40px;
+    }
+
+    span.critical, span.serious, span.moderate, span.minor {
+      display:inline-block;
+      height:1.5em;
+      padding: .4em;
+      border-radius:4px;
+      font-family:monospace;
+      font-weight: bold;
+    }
+
+    span.critical {
+      background-color: #9c2b2e;
+      color: #fff;
+    }
+    span.serious {
+      background-color: #ffa500;
+      color: #000;
+    }
+    span.moderate {
+      background-color: #7b5000;
+      color: #fff;
+    }
+    span.minor {
+      background-color: #ffff7f;
+      color: #000;
+    }
+    #message {
+      margin-left: 1em;
+    }
+    #violations-table_wrapper {
+      padding-left: 0 !important;
+    }
+
+  </style>
+
+  <title>EPUB Accessibility Report by DAISY Ace</title>
+</head>
+<body>
+
+  <header>
+    <noscript>
+      <div class="alert alert-info">Please enable javascript for best performance.</div>
+    </noscript>
+
+    <h1>EPUB Accessibility Report</h1>
+    <p class="font-italic">Generated by DAISY Ace (1.3.2) on 2/4/2025, 10:20:41 AM [Ace App v1.3.2] </p>
+    <p><span class="font-weight-bold">Title:</span> Research Methods in Human-Computer Interaction</p>
+  </header>
+
+  <nav>
+    <ul id="navlist" role="tablist">
+      <li class="nav-item"><a class="nav-link active" data-toggle="list" href="#violations" role="tab" aria-controls="violations" id="nav-violations">Violations</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="list" href="#metadata" role="tab" aria-controls="metadata" id="nav-metadata">Metadata</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="list" href="#outlines" role="tab" aria-controls="outlines" id="nav-outlines">Outlines</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="list" href="#images" role="tab" aria-controls="images" id="nav-images">Images</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <!-- VIOLATIONS TAB -->
+    <div id="violations" role="tabpanel">
+      <h2>Violations</h2>
+      <p class="sectionnav">Go to: <a href="#summary_of_violations">Summary of violations</a> | <a href="#all-violations">All violations</a> </p>
+
+      <h3 id="summary_of_violations">Summary of violations</h3>
+      <table id="violations-summary-stats-table" class="table table-striped">
+        <caption>Violation count, by ruleset and severity.</caption>
+        <thead class="thead-inverse">
+          <tr>
+            <th></th>
+            <th scope="col">Critical</th>
+            <th scope="col">Serious</th>
+            <th scope="col">Moderate</th>
+            <th scope="col">Minor</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">WCAG 2.0 A</th>
+            <td>0</td><td>1</td><td>0</td><td>0</td><td>1</td>
+          </tr>
+          <tr>
+            <th scope="row">WCAG 2.0 AA</th>
+            <td>0</td><td>8</td><td>0</td><td>0</td><td>8</td>
+          </tr>
+          <tr>
+            <th scope="row">EPUB</th>
+            <td>0</td><td>3</td><td>0</td><td>0</td><td>3</td>
+          </tr>
+          <tr>
+            <th scope="row">Best Practice</th>
+            <td>0</td><td>0</td><td>0</td><td>1</td><td>1</td>
+          </tr>
+          <tr>
+            <th scope="row">Other</th>
+            <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+          </tr>
+          <tr>
+            <th scope="row">Total</th>
+            <td>0</td><td>12</td><td>0</td><td>1</td><td>13</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="all-violations">All violations</h3>
+
+      <div id="filters" class="d-none py-4">
+        <span class="filter-label">Impact</span>
+        <select name="impact" aria-label="impact">
+          <option value="all" selected>All</option>
+          <option value='serious'>Serious</option><option value='minor'>Minor</option>
+        </select>
+        <span class="filter-label">Ruleset</span>
+        <select name="ruleset" aria-label="ruleset">
+          <option value="all" selected>All</option>
+          <option value='EPUB'>EPUB</option><option value='wcag2aa'>WCAG 2.0 AA</option><option value='best-practice'>Best Practice</option><option value='wcag2a'>WCAG 2.0 A</option>
+        </select>
+        <span class="filter-label">Rule</span>
+        <select name="rule" aria-label="rule">
+          <option value="all" selected>All</option>
+          <option value='epub-pagelist-broken'>epub-pagelist-broken</option><option value='color-contrast'>color-contrast</option><option value='epub-type-has-matching-role'>epub-type-has-matching-role</option><option value='frame-title'>frame-title</option>
+        </select>
+        <span class="filter-label">File</span>
+        <select name="file" aria-label="file">
+          <option value="all" selected>All</option>
+          <option value='/OEBPS\nav.xhtml'>/OEBPS\nav.xhtml</option><option value='xhtml/Ch001_1-18_B978012415820700007X.xhtml'>xhtml/Ch001_1-18_B978012415820700007X.xhtml</option><option value='xhtml/Showhide.xhtml'>xhtml/Showhide.xhtml</option><option value='xhtml/Flashcard.xhtml'>xhtml/Flashcard.xhtml</option>
+        </select>
+        <a href="#" onclick="resetFilters()" class="ml-4">Reset filters</a>
+      </div>
+
+      <table id="violations-table" class="table table-bordered">
+        <caption>Violations in the EPUB, with references to severity, guidelines and specific location of problem.</caption>
+        <thead class="thead-inverse">
+          <tr>
+            <th>Impact</th>
+            <th>Ruleset</th>
+            <th>Rule</th>
+            <th>Location</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>EPUB</span></td>
+        <td>epub-pagelist-broken<br/><br/><span class='engine'>Ace</span></td>
+        <td><em>"undefined"</em><br/><br/><code class='location'>/OEBPS\nav.xhtml</code></td><td class='details'>
+        <ul><li>Publication page list must reference page breaks (xhtml/Slideshow.xhtml#page_23 [epub:type=&quot;pagebreak&quot;!?]) </li><li> Ensures the page list links to page breaks (xhtml/Slideshow.xhtml#page_23 [epub:type=&quot;pagebreak&quot;!?]) </li><li> Make sure that page list items point to epub:type page breaks (xhtml/Slideshow.xhtml#page_23 [epub:type=&quot;pagebreak&quot;!?])</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/navigation/pagelist.html' target='_blank'>Learn more about: Page Navigation</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>EPUB</span></td>
+        <td>epub-pagelist-broken<br/><br/><span class='engine'>Ace</span></td>
+        <td><em>"undefined"</em><br/><br/><code class='location'>/OEBPS\nav.xhtml</code></td><td class='details'>
+        <ul><li>Publication page list must reference page breaks (xhtml/Showhide.xhtml#page_24 [epub:type=&quot;pagebreak&quot;!?]) </li><li> Ensures the page list links to page breaks (xhtml/Showhide.xhtml#page_24 [epub:type=&quot;pagebreak&quot;!?]) </li><li> Make sure that page list items point to epub:type page breaks (xhtml/Showhide.xhtml#page_24 [epub:type=&quot;pagebreak&quot;!?])</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/navigation/pagelist.html' target='_blank'>Learn more about: Page Navigation</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>EPUB</span></td>
+        <td>epub-pagelist-broken<br/><br/><span class='engine'>Ace</span></td>
+        <td><em>"undefined"</em><br/><br/><code class='location'>/OEBPS\nav.xhtml</code></td><td class='details'>
+        <ul><li>Publication page list must reference page breaks (xhtml/Flashcard.xhtml#page_25 [epub:type=&quot;pagebreak&quot;!?]) </li><li> Ensures the page list links to page breaks (xhtml/Flashcard.xhtml#page_25 [epub:type=&quot;pagebreak&quot;!?]) </li><li> Make sure that page list items point to epub:type page breaks (xhtml/Flashcard.xhtml#page_25 [epub:type=&quot;pagebreak&quot;!?])</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/navigation/pagelist.html' target='_blank'>Learn more about: Page Navigation</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/96/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;silver&quot;&gt;Silver color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 1.81 (foreground color: #c0c0c0, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/100/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;gray&quot;&gt;Gray color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 3.94 (foreground color: #808080, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/112/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;red&quot;&gt;Red color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 3.99 (foreground color: #ff0000, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/120/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;fuchsia&quot;&gt;Fuchsia color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 3.13 (foreground color: #ff00ff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/128/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;lime&quot;&gt;Lime color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 1.37 (foreground color: #00ff00, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/132/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;olive&quot;&gt;Olive color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 4.19 (foreground color: #808000, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/136/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;yellow&quot;&gt;Yellow color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 1.07 (foreground color: #ffff00, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 AA</span></td>
+        <td>color-contrast<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 1: Overview of Investment Banking"</em><br/><br/><code class='location'>xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/152/2)</code><br/><br/><div class='snippet'>Snippet:<code>&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;aqua&quot;&gt;Aqua color&lt;/span&gt;</code></div></td><td class='details'>
+        <ul><li>Element has insufficient color contrast of 1.25 (foreground color: #00ffff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 </li><li> Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds </li><li> Elements must meet minimum color contrast ratio thresholds</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/css/color.html' target='_blank'>Learn more about: Color</a></p>
+        </td></tr><tr>
+        <td><span class='minor'>Minor</span></td>
+        <td><span class='ruleset'>Best Practice</span></td>
+        <td>epub-type-has-matching-role<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Chapter 2: Samples of Widget Enhancements"</em><br/><br/><code class='location'>xhtml/Showhide.xhtml#epubcfi(/4/2[c0002])</code><br/><br/><div class='snippet'>Snippet:<code>&lt;section xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:epub=&quot;http://www.idpf.org/2007/ops&quot; epub:type=&quot;chapter&quot; id=&quot;c0002&quot;&gt;</code></div></td><td class='details'>
+        <ul><li>Element has no ARIA role matching its epub:type </li><li> Ensure the element has an ARIA role matching its epub:type </li><li> ARIA role should be used in addition to epub:type</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/html/roles.html' target='_blank'>Learn more about: ARIA role</a></p>
+        </td></tr><tr>
+        <td><span class='serious'>Serious</span></td>
+        <td><span class='ruleset'>WCAG 2.0 A</span></td>
+        <td>frame-title<br/><br/><span class='engine'>aXe</span></td>
+        <td><em>"Flashcard"</em><br/><br/><code class='location'>xhtml/Flashcard.xhtml#epubcfi(/4/2[d0001]/6/2[activityframe])</code><br/><br/><div class='snippet'>Snippet:<code>&lt;iframe xmlns=&quot;http://www.w3.org/1999/xhtml&quot; id=&quot;activityframe&quot; src=&quot;../widgets/Flashcard/01/index.xhtml&quot; scrolling=&quot;no&quot; allowFullScreen=&quot;true&quot; frameborder=&quot;0&quot; style=&quot;height:850px; width: 100%;&quot;&gt;&lt;/iframe&gt;</code></div></td><td class='details'>
+        <ul><li>Element has no title attribute</li><li>aria-label attribute does not exist or is empty</li><li>aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty</li><li>Element&#39;s default semantics were not overridden with role=&quot;none&quot; or role=&quot;presentation&quot; </li><li> Ensures &lt;iframe&gt; and &lt;frame&gt; elements have an accessible name </li><li> Frames must have an accessible name</li></ul>
+        <p><a href='http://kb.daisy.org/publishing/docs/html/iframes.html' target='_blank'>Learn more about: Inline Frames</a></p>
+        </td></tr>
+        </tbody>
+      </table>
+
+      <p class="pagenav">Go to: <a href="#violations">Top of section</a> | <a href="#navlist">Page navigation</a></p>
+    </div>
+
+    <!-- METADATA TAB -->
+    <div id="metadata" role="tabpanel">
+      <h2>Metadata</h2>
+
+      <p class="sectionnav">Go to: <a href="#all-metadata">All Metadata</a> | <a href="#a11y-metadata">Accessibility Metadata</a> </p>
+
+      <h3 id="all-metadata">All Metadata</h3>
+      <table id="metadata-table" class="table table-bordered">
+        <caption>Publication metadata.</caption>
+        <thead class="thead-inverse">
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>dc:identifier</td>
+            <td>urn:isbn:978-0-12-809343-6</td>
+          </tr>
+          <tr>
+            <td>dc:title</td>
+            <td>Research Methods in Human-Computer Interaction</td>
+          </tr>
+          <tr>
+            <td>dc:creator</td>
+            <td>Jonathan Lazar | Jinjuan Heidi Feng | Harry Hochheiser</td>
+          </tr>
+          <tr>
+            <td>dc:source</td>
+            <td>urn:isbn:9780128093436</td>
+          </tr>
+          <tr>
+            <td>dc:publisher</td>
+            <td>Elsevier Inc.</td>
+          </tr>
+          <tr>
+            <td>dc:language</td>
+            <td>en</td>
+          </tr>
+          <tr>
+            <td>dc:type</td>
+            <td>Text</td>
+          </tr>
+          <tr>
+            <td>dc:format</td>
+            <td>56 pages</td>
+          </tr>
+          <tr>
+            <td>dc:date</td>
+            <td>2024-05-09</td>
+          </tr>
+          <tr>
+            <td>schema:accessMode</td>
+            <td>textual | visual</td>
+          </tr>
+          <tr>
+            <td>schema:accessModeSufficient</td>
+            <td>textual | visual | textual, visual</td>
+          </tr>
+          <tr>
+            <td>schema:accessibilityFeature</td>
+            <td>structuralNavigation | displayTransformability | MathML | describedMath | ARIA | pageNavigation | alternativeText | longDescription | tableOfContents | structuralNavigation | index | printPageNumbers | readingOrder</td>
+          </tr>
+          <tr>
+            <td>schema:accessibilityHazard</td>
+            <td>noFlashingHazard | noSoundHazard | noMotionSimulationHazard</td>
+          </tr>
+          <tr>
+            <td>schema:accessibilitySummary</td>
+            <td>This publication conforms to WCAG 2.0 Level AA.</td>
+          </tr>
+          <tr>
+            <td>tdm:reservation</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>tdm:policy</td>
+            <td><a href="https://www.elsevier.com/tdm/tdmrep-policy.json" target="_blank">https://www.elsevier.com/tdm/tdmrep-policy.json</a></td>
+          </tr>
+          <tr>
+            <td>dcterms:modified</td>
+            <td>2024-05-09T15:30:00Z</td>
+          </tr>
+          <tr>
+            <td>cover</td>
+            <td>cover-image</td>
+          </tr>
+          
+          
+          
+        </tbody>
+      </table>
+
+      <h3 id="a11y-metadata">Accessibility Metadata</h3>
+
+        <p>The following accessibility metadata is present:
+          <span class="metadata-name">schema:accessMode</span>
+          <span class="metadata-name">schema:accessibilityFeature</span>
+          <span class="metadata-name">schema:accessibilityHazard</span>
+          <span class="metadata-name">schema:accessibilitySummary</span>
+          <span class="metadata-name">schema:accessModeSufficient</span>
+        </p>
+
+        <p>The following accessibility metadata is missing:
+          <span class="metadata-name">a11y:certifiedBy</span>
+          <span class="metadata-name">a11y:certifierCredential</span>
+          <span class="metadata-name">a11y:certifierReport</span>
+          <span class="metadata-name">dcterms:conformsTo</span>
+        .
+        </p>
+      <p class="pagenav">Go to: <a href="#metadata">Top of section</a> | <a href="#navlist">Page navigation</a></p>
+    </div>
+
+    <!-- OUTLINES TAB -->
+    <div id="outlines" role="tabpanel">
+      <h2>Outlines</h2>
+      <p class="sectionnav">Go to: <a href="#toc-outline">TOC Outline</a> | <a href="#headings-outline">Headings Outline</a> | <a href="#html-outline">HTML Outline</a> </p>
+
+      <div class="row">
+
+        <div class="col-sm" id="toc-outline">
+          <h3>TOC Outline</h3>
+          <ol xmlns="http://www.w3.org/1999/xhtml">
+<li>Instructions for online access</li>
+<li>Title of Book
+<ol>
+<li>Cover Image</li>
+<li>Title Page</li>
+<li>Disclaimer</li>
+<li>Table of Contents</li>
+<li>Copyright</li>
+<li>List of Contributors</li>
+<li>Dedication</li>
+<li>Preface</li>
+<li>Acknowledgments</li>
+<li>List of Illustrations</li>
+<li>List of Tables</li></ol></li>
+<li>Volume Lable: Volume Title</li>
+<li>1. Overview of Investment Banking
+<ol>
+<li>Exam Q&amp;A</li>
+<li>Abstract
+<ol>
+<li>Section title inside abstract</li>
+<li>Keywords</li>
+</ol></li>
+<li>Postcrisis Global Investment Banking Firms</li>
+<li>Other Investment Banking Firms</li>
+<li>Investment Banking Businesses</li>
+<li>Investment Banking Division
+<ol>
+<li>Client Coverage Bankers</li>
+<li>Capital Markets Group</li>
+<li>M&amp;A Group</li>
+</ol></li>
+<li>Trading Division
+<ol>
+<li>Fixed Income, Currencies, and Commodities</li>
+<li>Equities</li>
+</ol></li>
+<li>Nonclient-Related Trading and Investing
+<ol>
+<li>Principal Investing</li>
+<li>Proprietary Trading</li>
+</ol></li>
+<li>Asset Management Division
+<ol>
+<li>Coinvestments in Asset Management Division Funds</li>
+</ol></li>
+<li>Review Questions</li>
+<li>References</li>
+</ol></li>
+<li>Appendix A</li>
+<li>Glossary</li>
+<li>Bibliography</li>
+<li>Index</li>
+<li>Slide Show</li>
+<li>Show Hide</li>
+<li>Flashcard</li>
+</ol>
+        </div>
+
+        <div class="col-sm" id="headings-outline">
+          <h3>Headings Outline</h3>
+          <ul><li><span class="toc-h1">Instructions for online access</span><li><span class="toc-h1">Research Methods in Human-Computer Interaction</span><ul><li><span class="toc-h2">A Practical Guide</span></li></ul></li><li><span class="toc-h1">Disclaimer</span><li><span class="toc-h1">Table of Contents</span><li><span class="toc-h1">Copyright</span><li><span class="toc-h1">List of Contributors</span><ul><li><span class="toc-h2">More than 1 affiliation</span></li></ul></li><li><span class="toc-h1">Dedication</span><li><span class="toc-h1">Preface</span><ul><li><span class="toc-h2">Target Audience</span><ul><li><span class="toc-h3">Distinguishing Features</span><li><span class="toc-h3">Case Studies</span><li><span class="toc-h3">The World Has Changed</span><li><span class="toc-h3">Structure of the Book</span><ul><li><span class="toc-h4">Part One: Investment Banking</span><li><span class="toc-h4">Part Two: Hedge Funds and Private Equity</span><li><span class="toc-h4">Part Three: Case Studies</span></li></ul></li><li><span class="toc-h3">New Content in the Second Edition</span></li></ul></li></ul></li><li><span class="toc-h1">Acknowledgments</span><li><span class="toc-h1">List of Illustrations</span><li><span class="toc-h1">List of Tables</span><li><span class="toc-h1">Volume Label Volume Title</span><li><span class="toc-h1">Chapter 1 Overview of Investment Banking*</span><ul><li><span class="toc-h2">Exam Q&A</span><li><span class="toc-h2">Chapter Outline</span><li><span class="toc-h2">Missing Head</span><li><span class="toc-h2">Objectives</span><li><span class="toc-h2">Abstract</span><ul><li><span class="toc-h3">Section title inside abstract</span><li><span class="toc-h3">Keywords</span></li></ul></li><li><span class="toc-h2">Postcrisis Global Investment Banking Firms</span><li><span class="toc-h2">Other Investment Banking Firms</span><li><span class="toc-h2">Investment Banking Businesses</span><li><span class="toc-h2">Investment Banking Division</span><ul><li><span class="toc-h3">Client Coverage Bankers</span><li><span class="toc-h3">Capital Markets Group</span><ul><li><span class="toc-h4">Equity Capital Markets</span><li><span class="toc-h4">Debt Capital Markets</span></li></ul></li><li><span class="toc-h3">M&A Group</span></li></ul></li><li><span class="toc-h2">Trading Division</span><ul><li><span class="toc-h3">Fixed Income, Currencies, and Commodities</span><li><span class="toc-h3">Equities</span></li></ul></li></ul></li><li><span class="toc-h1">Subchapter Title</span><ul><li><span class="toc-h2">Nonclient-Related Trading and Investing</span><ul><li><span class="toc-h3">Principal Investing</span><li><span class="toc-h3">Proprietary Trading</span></li></ul></li><li><span class="toc-h2">Asset Management Division</span><ul><li><span class="toc-h3">Coinvestments in Asset Management Division Funds</span><ul><li><span class="toc-h4">Inline Equation Sample</span><li><span class="toc-h4">Numbered Equation Sample</span><li><span class="toc-h4">Stereochem Sample</span><li><span class="toc-h4">Biography Sample</span></li></ul></li></ul></li><li><span class="toc-h2">Section Heading 1</span><ul><li><span class="toc-h3">Section Head 2 immediate after Head 1</span><li><span class="toc-h3">Section Heading 2</span><ul><li><span class="toc-h4">Section Head 3 immediate after Head 2</span><li><span class="toc-h4">Section Heading 3</span><ul><li><span class="toc-h5">Section Heading 4</span><ul><li><span class="toc-h6">Section Heading 5</span></li></ul></li></ul></li></ul></li></ul></li><li><span class="toc-h2">Semantic Textboxes</span><li><span class="toc-h2">Table Styles - Only for German Titles</span><li><span class="toc-h2">Figure Styles - Only for German Titles</span><li><span class="toc-h2">Review Questions</span><li><span class="toc-h2">References</span></li></ul></li><li><span class="toc-h1">Description of Figure 1.1</span><li><span class="toc-h1">Appendix A: An Algorithm for Discovery</span><li><span class="toc-h1">Glossary</span><ul><li><span class="toc-h2">A</span><li><span class="toc-h2">B</span></li></ul></li><li><span class="toc-h1">Bibliography</span><ul><li><span class="toc-h2">History and Philosophy of Science</span></li></ul></li><li><span class="toc-h1">Index</span><ul><li><span class="toc-h2">A</span></li></ul></li><li><span class="toc-h1">Slideshow</span><li><span class="toc-h1">Show-Hide</span><ul><li><span class="toc-h2">Challenge Yourself</span></li></ul></li><li><span class="toc-h1">Flashcard</span><li><span class="toc-h1">Table of Contents</span><li><span class="toc-h1">List of tables</span><li><span class="toc-h1">List of figures</span><li><span class="toc-h1">Landmarks</span></li></ul>
+        </div>
+
+        <div class="col-sm" id="html-outline">
+          <h3>HTML Outline</h3>
+          <ol><li><ol><li>Instructions for online access</li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li><i>Untitled SECTION</i></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Research Methods in Human-Computer Interaction<ol><li>A Practical Guide</li></ol></li></ol></li></ol></li><li><ol><li>Disclaimer</li></ol></li><li><ol><li>Table of Contents<ol><li><i>Untitled SECTION</i></li><li><i>Untitled SECTION</i></li><li><i>Untitled SECTION</i></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Copyright</li></ol></li></ol></li><li><ol><li>List of Contributors<ol><li>More than 1 affiliation</li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Dedication</li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Preface<ol><li><i>Untitled SECTION</i></li><li><i>Untitled SECTION</i><ol><li>Target Audience</li><li>Distinguishing Features</li><li>Case Studies</li><li>The World Has Changed</li><li>Structure of the Book<ol><li>Part One: Investment Banking</li><li>Part Two: Hedge Funds and Private Equity</li><li>Part Three: Case Studies</li></ol></li><li>New Content in the Second Edition</li></ol></li></ol></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Acknowledgments</li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>List of Illustrations</li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>List of Tables</li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Volume Label Volume Title<ol><li><i>Untitled NAV</i></li></ol></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li><i>Error: no H1-H6 inside HGROUP</i><ol><li>Exam Q&amp;A</li><li>Chapter Outline</li><li>Missing Head</li><li>Objectives</li><li>Abstract<ol><li>Section title inside abstract</li></ol></li><li>Keywords</li><li><i>Untitled ASIDE</i></li><li><i>Untitled ASIDE</i></li><li>Postcrisis Global Investment Banking Firms</li><li>Other Investment Banking Firms</li><li>Investment Banking Businesses</li><li>Investment Banking Division<ol><li>Client Coverage Bankers</li><li>Capital Markets Group<ol><li>Equity Capital Markets</li><li>Debt Capital Markets</li></ol></li><li>M&amp;A Group</li></ol></li><li>Trading Division<ol><li>Fixed Income, Currencies, and Commodities</li><li>Equities</li></ol></li></ol></li><li>Subchapter Title<ol><li>Nonclient-Related Trading and Investing<ol><li>Principal Investing</li></ol></li><li>Proprietary Trading</li><li>Asset Management Division<ol><li>Coinvestments in Asset Management Division Funds<ol><li>Inline Equation Sample</li><li>Numbered Equation Sample</li><li>Stereochem Sample</li><li>Biography Sample</li></ol></li></ol></li><li>Section Heading 1<ol><li>Section Head 2 immediate after Head 1</li><li>Section Heading 2<ol><li>Section Head 3 immediate after Head 2</li><li>Section Heading 3<ol><li>Section Heading 4<ol><li>Section Heading 5</li></ol></li></ol></li></ol></li></ol></li><li>Semantic Textboxes</li><li>Table Styles - Only for German Titles</li><li>Figure Styles - Only for German Titles</li><li>Review Questions</li><li>References</li><li><i>Untitled SECTION</i></li></ol></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Description of Figure 1.1</li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Appendix A: An Algorithm for Discovery</li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Glossary<ol><li>A</li><li>B</li></ol></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Bibliography<ol><li>History and Philosophy of Science</li></ol></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Index<ol><li>A</li></ol></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li><i>Error: no H1-H6 inside HGROUP</i></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li><i>Error: no H1-H6 inside HGROUP</i><ol><li>Challenge Yourself</li></ol></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li><i>Error: no H1-H6 inside HGROUP</i></li></ol></li></ol></li><li><ol><li><i>Untitled BODY</i><ol><li>Table of Contents</li><li>List of tables</li><li>List of figures</li><li>Landmarks</li><li><i>Untitled NAV</i></li></ol></li></ol></li></ol>
+      </div>
+    </div>
+    <p class="pagenav">Go to: <a href="#outlines">Top of section</a> | <a href="#navlist">Page navigation</a></p>
+  </div>
+
+  <!-- IMAGES TAB -->
+  <div id="images" role="tabpanel">
+      <h2>Images</h2>
+        <table  id="image-table" class="table table-striped table-bordered">
+          <caption>Images in the EPUB, with their description</caption>
+          <thead class="thead-inverse">
+             <tr>
+                <th>Image</th>
+                <th><code>alt</code>
+                </th>
+                <th><code>aria-describedby</code>
+                </th>
+                <th><code>figcaption</code></th>
+                <th>Location</th>
+                <th>Role</th>
+             </tr>
+          </thead>
+          <tbody>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/9780128093436_FC.jpg">
+                      <img src = "data/OEBPS/images/9780128093436_FC.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>Front Cover for Research Methods in Human-Computer Interaction, second edition.  Authors, Jonathan Lazar, Jinjuan Feng, Harry Hochheiser.  The cover image depicts a variety of individuals of different backgrounds, some with disabilities, in front of a computer screen. Morgan Kaufmann logo.</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Cover.xhtml#epubcfi(/4/2/4[Cover]/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/publogo.jpg">
+                      <img src = "data/OEBPS/images/publogo.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>Logo of Elsevier and Morgan Kaufmann Publishers, an imprint of Elsevier</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Title_page.xhtml#epubcfi(/4/2/16/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/F099990icon01-9780124158207.jpg">
+                      <img src = "data/OEBPS/images/F099990icon01-9780124158207.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>image</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Copyright_iv_B9780124158207000084.xhtml#epubcfi(/4/2/64/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/code.png">
+                      <img src = "data/OEBPS/images/code.png"/>
+                    </a>
+                  </td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/10/2/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/F000013f01-03-9780124158207.jpg">
+                      <img src = "data/OEBPS/images/F000013f01-03-9780124158207.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>If the alt-text for the image is provided in the production stage add it using alt-text attribute. If not then use the text Image in the alt-text attribute</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/30/2[B0010]/14[s0295]/32/2[F0020]/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/T000013tabT0010.jpg">
+                      <img src = "data/OEBPS/images/T000013tabT0010.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>Image</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/40/2[S0025]/6/6/2/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/F000013f01-01-9780124158207.jpg">
+                      <img src = "data/OEBPS/images/F000013f01-01-9780124158207.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>If the alt-text for the image is provided in the production stage add it using alt-text attribute. If not then use the text Image in the alt-text attribute</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td>FIGURE 1.1 Goldman Sachs business segments. Keywords: Bem1 complex; autocatalytic clustering; GTP-Cdc42; GDP-Cdc42; GTP hydrolysis Source: Extracted from Goldman Sachs 2010 Annual Report.</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/46/2[S0035]/8/2[F0010]/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/F000013f01-02-9780124158207.jpg">
+                      <img src = "data/OEBPS/images/F000013f01-02-9780124158207.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>If the alt-text for the image is provided in the production stage add it using alt-text attribute. If not then use the text Image in the alt-text attribute</td>
+
+                    <td>The long description attribute should be used if the total characters count of the alt-text is more than 200. The alt-text and the long description for the alt-text will be provided during the production stage. If not provided, then use the default alt-text as &quot;Image&quot;.</td>
+
+                    <td>FIGURE 1.2 JPMorgan Chase business segments. Source: Extracted from JPMorgan Chase 2010 Annual Report.</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/46/2[S0035]/10/2[F0015]/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/T000013tabT0030.jpg">
+                      <img src = "data/OEBPS/images/T000013tabT0030.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>Image</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/70/2[S0100]/6/2[S0105]/8/6/2/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/T000013tabT0030a.jpg">
+                      <img src = "data/OEBPS/images/T000013tabT0030a.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>Image</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/70/2[S0100]/6/2[S0105]/8/6/2/6)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/T000011tabT0030a.jpg">
+                      <img src = "data/OEBPS/images/T000011tabT0030a.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>Table 11.3 shows an agreement matrix, containing the distribution and marginal totals of items coded by two coders into three categories (physical, cognitive, and perceptual), as needed to calculate inter-rater reliability</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/70/2[S0100]/6/2[S0105]/12/6/2/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/F000029si1.svg">
+                      <img src = "data/OEBPS/images/F000029si1.svg"/>
+                    </a>
+                  </td>
+
+                    <td>If the alt-text for the equation is provided in the production stage add it using alt-text attribute. If not, then use the text &#x27;Equation&#x27; in the alt-text attribute</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/70/2[S0100]/6/2[S0105]/16/2/4/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/F000018si1.png">
+                      <img src = "data/OEBPS/images/F000018si1.png"/>
+                    </a>
+                  </td>
+
+                    <td>If the alt-text for the equation is provided in the production stage add it using alt-text attribute. If not, then use the text &#x27;Equation&#x27; in the alt-text attribute</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/70/2[S0100]/6/2[S0105]/18/2/4/2[FD1]/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/chem.jpg">
+                      <img src = "data/OEBPS/images/chem.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>image</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/70/2[S0100]/6/2[S0105]/20/2/4/2[FD2]/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/T000013tabT0010G.jpg">
+                      <img src = "data/OEBPS/images/T000013tabT0010G.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>Image</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/254/4/2/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/chp001_gr001.jpg">
+                      <img src = "data/OEBPS/images/chp001_gr001.jpg"/>
+                    </a>
+                  </td>
+
+                    <td>image</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td>Abb. F.1 Investment Banking Division. Keywords: Bem1 complex; autocatalytic clustering; GTP-Cdc42; GDP-Cdc42; GTP hydrolysis Source: Extracted from Goldman Sachs 2010 Annual Report.</td>
+
+                  <td class="location">xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/264/2[F0020g]/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/F000013f01-01-9780124158207.jpg">
+                      <img src = "data/OEBPS/images/F000013f01-01-9780124158207.jpg"/>
+                    </a>
+                  </td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Ch001_Extended_Fig1_1.xhtml#epubcfi(/4/2/4/2/2)</td>
+
+                    <td>presentation</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy1.png">
+                      <img src = "data/OEBPS/images/dummy1.png"/>
+                    </a>
+                  </td>
+
+                    <td>Blood Pressure Blood Flow</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/2/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy2.png">
+                      <img src = "data/OEBPS/images/dummy2.png"/>
+                    </a>
+                  </td>
+
+                    <td>Illustration of QRS complexes and RR interval of ECG signals.</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/4/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy1.png">
+                      <img src = "data/OEBPS/images/dummy1.png"/>
+                    </a>
+                  </td>
+
+                    <td>Blood Pressure Blood Flow</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/6/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy2.png">
+                      <img src = "data/OEBPS/images/dummy2.png"/>
+                    </a>
+                  </td>
+
+                    <td>Illustration of QRS complexes and RR interval of ECG signals.</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/8/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy3.png">
+                      <img src = "data/OEBPS/images/dummy3.png"/>
+                    </a>
+                  </td>
+
+                    <td>Healthy and unhealthy blood pressure ranges.</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/10/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy1.png">
+                      <img src = "data/OEBPS/images/dummy1.png"/>
+                    </a>
+                  </td>
+
+                    <td>Blood Pressure Blood Flow</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/12/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy3.png">
+                      <img src = "data/OEBPS/images/dummy3.png"/>
+                    </a>
+                  </td>
+
+                    <td>Healthy and unhealthy blood pressure ranges.</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/14/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+                <tr>
+                  <td class="image">
+                    <a href="data/OEBPS/images/dummy3.png">
+                      <img src = "data/OEBPS/images/dummy3.png"/>
+                    </a>
+                  </td>
+
+                    <td>Healthy and unhealthy blood pressure ranges.</td>
+
+                    <td class="missing">N/A</td>
+
+                    <td class="missing">N/A</td>
+
+                  <td class="location">xhtml/Showhide.xhtml#epubcfi(/4/2[c0002]/6/2[b0130]/4/4[l0885]/2/18/4/2/4/2)</td>
+
+                    <td class="missing">N/A</td>
+                </tr>
+          </tbody>
+        </table>
+      <p class="pagenav">Go to: <a href="#images">Top of section</a> | <a href="#navlist">Page navigation</a></p>
+    </div>
+
+  </div> <!-- end div for tabs' contents -->
+
+  <script type="text/javascript">
+
+    // https://datatables.net/reference/option/language
+    // https://datatables.net/examples/basic_init/language.html
+    // https://datatables.net/manual/i18n
+    const dataTableInit = {
+        "language": {
+            "decimal":        "",
+            "emptyTable":     'No data available in table',
+            "info":           'Showing: _START_ - _END_ / _TOTAL_',
+            "infoEmpty":      'Showing: 0 - 0 / 0',
+            "infoFiltered":   '(filtered from _MAX_ total entries)',
+            "infoPostFix":    "",
+            "thousands":      ",",
+            "lengthMenu":     'Display _MENU_ records per page',
+            "loadingRecords": 'Loading...',
+            "processing":     'Processing...',
+            "search":         'Search:',
+            "zeroRecords":    'No matching records found',
+            "paginate": {
+                "first":      'First',
+                "last":       'Last',
+                "next":       'Next',
+                "previous":   'Previous'
+            },
+            "aria": {
+                "sortAscending":  ': activate to sort column ascending',
+                "sortDescending": ': activate to sort column descending'
+            }
+        }
+    };
+
+  // keep a flat list of the violations in memory for table filtering
+  var violations = [{"file":"/OEBPS\\nav.xhtml","engine":"Ace","kburl":"http://kb.daisy.org/publishing/docs/navigation/pagelist.html","kbtitle":"Page Navigation","rule":"epub-pagelist-broken","desc":"Publication page list must reference page breaks (xhtml/Slideshow.xhtml#page_23 [epub:type=&quot;pagebreak&quot;!?]) \n Ensures the page list links to page breaks (xhtml/Slideshow.xhtml#page_23 [epub:type=&quot;pagebreak&quot;!?]) \n Make sure that page list items point to epub:type page breaks (xhtml/Slideshow.xhtml#page_23 [epub:type=&quot;pagebreak&quot;!?])","impact":"serious","location":"/OEBPS\\nav.xhtml","rulesetTags":["EPUB"],"applicableRulesetTag":"EPUB"},{"file":"/OEBPS\\nav.xhtml","engine":"Ace","kburl":"http://kb.daisy.org/publishing/docs/navigation/pagelist.html","kbtitle":"Page Navigation","rule":"epub-pagelist-broken","desc":"Publication page list must reference page breaks (xhtml/Showhide.xhtml#page_24 [epub:type=&quot;pagebreak&quot;!?]) \n Ensures the page list links to page breaks (xhtml/Showhide.xhtml#page_24 [epub:type=&quot;pagebreak&quot;!?]) \n Make sure that page list items point to epub:type page breaks (xhtml/Showhide.xhtml#page_24 [epub:type=&quot;pagebreak&quot;!?])","impact":"serious","location":"/OEBPS\\nav.xhtml","rulesetTags":["EPUB"],"applicableRulesetTag":"EPUB"},{"file":"/OEBPS\\nav.xhtml","engine":"Ace","kburl":"http://kb.daisy.org/publishing/docs/navigation/pagelist.html","kbtitle":"Page Navigation","rule":"epub-pagelist-broken","desc":"Publication page list must reference page breaks (xhtml/Flashcard.xhtml#page_25 [epub:type=&quot;pagebreak&quot;!?]) \n Ensures the page list links to page breaks (xhtml/Flashcard.xhtml#page_25 [epub:type=&quot;pagebreak&quot;!?]) \n Make sure that page list items point to epub:type page breaks (xhtml/Flashcard.xhtml#page_25 [epub:type=&quot;pagebreak&quot;!?])","impact":"serious","location":"/OEBPS\\nav.xhtml","rulesetTags":["EPUB"],"applicableRulesetTag":"EPUB"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 1.81 (foreground color: #c0c0c0, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/96/2"],"css":[".silver"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/96/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;silver&quot;&gt;Silver color&lt;/span&gt;"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 3.94 (foreground color: #808080, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/100/2"],"css":[".gray"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/100/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;gray&quot;&gt;Gray color&lt;/span&gt;"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 3.99 (foreground color: #ff0000, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/112/2"],"css":[".red"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/112/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;red&quot;&gt;Red color&lt;/span&gt;"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 3.13 (foreground color: #ff00ff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/120/2"],"css":[".fuchsia"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/120/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;fuchsia&quot;&gt;Fuchsia color&lt;/span&gt;"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 1.37 (foreground color: #00ff00, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/128/2"],"css":[".lime"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/128/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;lime&quot;&gt;Lime color&lt;/span&gt;"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 4.19 (foreground color: #808000, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/132/2"],"css":[".olive"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/132/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;olive&quot;&gt;Olive color&lt;/span&gt;"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 1.07 (foreground color: #ffff00, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/136/2"],"css":[".yellow"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/136/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;yellow&quot;&gt;Yellow color&lt;/span&gt;"},{"file":"xhtml/Ch001_1-18_B978012415820700007X.xhtml","fileTitle":"Chapter 1: Overview of Investment Banking","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/css/color.html","kbtitle":"Color","rule":"color-contrast","desc":"Element has insufficient color contrast of 1.25 (foreground color: #00ffff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1 \n Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds \n Elements must meet minimum color contrast ratio thresholds","pointer":{"cfi":["/4/2[c0001]/152/2"],"css":[".aqua"]},"impact":"serious","location":"xhtml/Ch001_1-18_B978012415820700007X.xhtml#epubcfi(/4/2[c0001]/152/2)","rulesetTags":["cat.color","wcag2aa","wcag143","ACT","TTv5","TT13.c"],"applicableRulesetTag":"wcag2aa","html":"&lt;span xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;aqua&quot;&gt;Aqua color&lt;/span&gt;"},{"file":"xhtml/Showhide.xhtml","fileTitle":"Chapter 2: Samples of Widget Enhancements","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/html/roles.html","kbtitle":"ARIA role","rule":"epub-type-has-matching-role","desc":"Element has no ARIA role matching its epub:type \n Ensure the element has an ARIA role matching its epub:type \n ARIA role should be used in addition to epub:type","pointer":{"cfi":["/4/2[c0002]"],"css":["#c0002"]},"impact":"minor","location":"xhtml/Showhide.xhtml#epubcfi(/4/2[c0002])","rulesetTags":["best-practice","cat.aria"],"applicableRulesetTag":"best-practice","html":"&lt;section xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:epub=&quot;http://www.idpf.org/2007/ops&quot; epub:type=&quot;chapter&quot; id=&quot;c0002&quot;&gt;"},{"file":"xhtml/Flashcard.xhtml","fileTitle":"Flashcard","engine":"aXe","kburl":"http://kb.daisy.org/publishing/docs/html/iframes.html","kbtitle":"Inline Frames","rule":"frame-title","desc":"Element has no title attribute\naria-label attribute does not exist or is empty\naria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\nElement&#39;s default semantics were not overridden with role=&quot;none&quot; or role=&quot;presentation&quot; \n Ensures &lt;iframe&gt; and &lt;frame&gt; elements have an accessible name \n Frames must have an accessible name","pointer":{"cfi":["/4/2[d0001]/6/2[activityframe]"],"css":["#activityframe"]},"impact":"serious","location":"xhtml/Flashcard.xhtml#epubcfi(/4/2[d0001]/6/2[activityframe])","rulesetTags":["cat.text-alternatives","wcag2a","wcag412","section508","section508.22.i","TTv5","TT12.d"],"applicableRulesetTag":"wcag2a","html":"&lt;iframe xmlns=&quot;http://www.w3.org/1999/xhtml&quot; id=&quot;activityframe&quot; src=&quot;../widgets/Flashcard/01/index.xhtml&quot; scrolling=&quot;no&quot; allowFullScreen=&quot;true&quot; frameborder=&quot;0&quot; style=&quot;height:850px; width: 100%;&quot;&gt;&lt;/iframe&gt;"}];
+
+  // update the contents of the table to reflec the filtering
+  function updateTableContents(violationSubset) {
+    // anything else is 'other'
+    var rulesetTagLabels = {
+      'wcag2a': 'WCAG 2.0 A',
+      'wcag2aa': 'WCAG 2.0 AA',
+      'EPUB': 'EPUB',
+      'best-practice': 'Best Practice',
+      'other': 'Other'
+    };
+
+    $('#violations-table').dataTable().fnDestroy();
+    $("#message").remove();
+    if (violationSubset.length == 0) {
+      $('<p id=\'message\'>No matching violations found.</p>').insertBefore("#violations .pagenav");
+      $("#violations-table").hide();
+      return;
+    }
+
+    $("#violations-table").show();
+    $("#filters").show();
+
+    var tablebody = $("#violations-table > tbody");
+    tablebody.empty();
+
+    violationSubset.forEach(function(violation) {
+
+      var tr = $("<tr></tr>");
+      var tdImpact = $("<td><span class='" + violation["impact"] + "'>" + violation["impact"] + "</span></td>");
+      var tdRuleset = $("<td><span class='ruleset'>" + rulesetTagLabels[violation["applicableRulesetTag"]] + "</span></td>");
+      var tdLocation = $("<td><em>\"" + violation["fileTitle"] + "\"</em><br/><br/><code class='location'>" + violation["location"] + "</code></td>");
+      if (violation.html) {
+        var tdSnippet = $('<br/><br/><div class=\'snippet\'>Snippet: <code>'+ violation.html.trim() + "</code></div>");
+        tdLocation.append(tdSnippet);
+      }
+      var tdRule = $("<td>" + violation["rule"] + "<br/><br/><span class='engine'>" + violation["engine"] + "</span></td>");
+
+      var desc = violation["desc"];
+
+      var detailsArr = desc.split("\n");
+      var tdDetails = $("<td class='details'></td>");
+
+      var ul = $("<ul></ul>");
+      tdDetails.append(ul);
+      detailsArr.forEach(function(item) {
+        if (item != "") {
+          var elm = $("<li></li>");
+          elm.text(decodeEntities(item));
+          ul.append(elm);
+        }
+      });
+      var link = $("<p><a href='"
+        + violation["kburl"]
+        + '\' target=\'_blank\'>Learn more about: ' + violation["kbtitle"] + "</a></p>");
+      tdDetails.append(link);
+
+      tr.append(tdImpact);
+      tr.append(tdRuleset);
+      tr.append(tdRule);
+      tr.append(tdLocation);
+      tr.append(tdDetails);
+      tablebody.append(tr);
+    });
+
+    $('#violations-table').DataTable(dataTableInit);
+  }
+
+  function filterSelected() {
+    var filters = [];
+    $("#filters select").each(function(idx, elm) {
+      $(elm).children("option").each(function (idx, optElm) {
+        if (optElm.selected) {
+          filters[elm.name] = optElm.value;
+        }
+      });
+    });
+    var filteredData = filterViolations(filters);
+    updateTableContents(filteredData, true);
+  }
+
+  // expects:
+  // {"rule": "all", "impact": "serious", "file": "p1.xhtml"}
+  function filterViolations(filters) {
+    var filteredList = [];
+    violations.forEach(function(item) {
+      if (
+        (filters["rule"] == "all" || item["rule"] === filters["rule"])
+        &&
+        (filters["impact"] == "all" || item["impact"] === filters["impact"])
+        &&
+        (filters["file"] == "all" || item["file"] === filters["file"])
+        &&
+        (filters["ruleset"] == "all" || item["applicableRulesetTag"] === filters["ruleset"])
+      )
+      {
+        filteredList.push(item);
+      }
+    });
+    return filteredList;
+  }
+
+  function resetFilters() {
+    $("#filters select").each(function(idx, elm) {
+      $(elm).children("option").each(function (idx, optElm) {
+        optElm.selected = optElm.value == "all";
+      });
+    });
+    filterSelected();
+  }
+
+  function decodeEntities(text) {
+    // The entities tend to appear in violation descriptions, and there are just a few named ones involved
+    var namedEntities = {
+      "&lt;": "<",
+      "&gt;": ">",
+      "&quot;": "\"",
+      "&nbsp": " "
+    };
+    // process entities
+    var str = text.replace(/&#(\d+);/g, function(match, dec) {
+      return String.fromCharCode(dec);
+		});
+
+    //process named entities
+    Object.keys(namedEntities).forEach(k => {
+      str = str.replace(new RegExp(k, 'g'), namedEntities[k]);
+    });
+    return str;
+  }
+
+  // certain classes need to be added to elements if we're using javascript in the browser
+  function prepareForJS() {
+    $('#filters').removeClass('d-none');
+    $('#navlist').addClass('nav-tabs nav');
+    $('#violations').addClass('tab-pane active');
+    $('#metadata').addClass('tab-pane');
+    $('#outlines').addClass('tab-pane');
+    $('#images').addClass('tab-pane');
+  }
+  $(document).ready(function() {
+    prepareForJS();
+    $('#metadata-table').DataTable(dataTableInit);
+    //updateTableContents(violations, false);
+    $('#violations-table').DataTable(dataTableInit);
+    $('#filters > select').change(filterSelected);
+  });
+
+  </script>
+
+
+</body>
+</html>
