@@ -5007,3 +5007,15 @@ position: absolute;
 top: 0.08em;
 right: 0;
 }
+
+
+/*Changes to fix - ePUB validation errors */
+iframe.flashcard_activityframe {
+	overflow: hidden;
+	scrollbar-width: none; /* Firefox */
+	border: none;
+}
+
+iframe.flashcard_activityframe::-webkit-scrollbar {
+    display: none;
+}

@@ -130,6 +130,38 @@ var allvideoelemts = document.querySelectorAll("video.hls-video");
         }
       });
 
+//Embedded Audio  - About the Audio click
+setTimeout(function () {
+    var aboutTheAudios = document.querySelectorAll(".about-the-audio");
+	aboutTheAudios.forEach(abtTheAudbutton => {
+		abtTheAudbutton.addEventListener("click", function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			// Toggle the 'show-ans' class
+			this.classList.toggle("expanded");
 
+			// Toggle text and attributes
+			if (this.classList.contains('expanded')) {
+				//this.setAttribute("aria-pressed", "true");
+				this.setAttribute("aria-expanded", "true");
+			} else {
+				//this.setAttribute("aria-pressed", "false");
+				this.setAttribute("aria-expanded", "false");
+			}
 
-
+			// Slide toggle the next sibling with class 'answer'
+			const answerElement = this.nextElementSibling;
+			if (answerElement && answerElement.classList.contains("collapsed")) {
+				if (answerElement.style.display === "none" || !answerElement.style.display) {
+					answerElement.style.display = "block"; // Show the element
+					answerElement.style.transition = "max-height 0.2s ease-in-out";
+					answerElement.style.maxHeight = "500px"; // Example height, adjust as needed
+				} else {
+					answerElement.style.display = "none"; // Hide the element
+					answerElement.style.maxHeight = "0";
+				}
+			}
+		});
+	});
+}, 1000);
+//End
