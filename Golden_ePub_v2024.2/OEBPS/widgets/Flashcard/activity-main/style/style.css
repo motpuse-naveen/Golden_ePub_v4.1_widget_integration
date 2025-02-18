@@ -329,9 +329,7 @@ iframe.activityframe::-webkit-scrollbar {
     left: 20%;
   }
   */
-  html, body {
-    height: 80%;
-  }
+
   .h-hotspot .modalbg .dialog_body{
     max-height: 250px;
   }
