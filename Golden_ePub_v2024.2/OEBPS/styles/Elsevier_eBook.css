@@ -5014,6 +5014,10 @@ top: 0.08em;
 right: 0;
 }
 
+iframe {
+	border:none;
+	width: 100%;
+}
 
 /*Changes to fix - ePUB validation errors */
 iframe.flashcard_activityframe {
